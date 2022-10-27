@@ -83,13 +83,17 @@ export class RobotApp extends gfx.GfxApp
         const upperYController = upperArmControls.add(this, 'upperArmRotate', -180, 180);
         upperYController.name('rotate');
         upperYController.onChange((value: number) => { 
-            // TO BE ADDED
+            const bendRotation = gfx.Quaternion.makeRotationZ(gfx.MathUtils.degreesToRadians(this.upperArmBend));
+            const rotation = gfx.Quaternion.makeRotationY(gfx.MathUtils.degreesToRadians(this.upperArmRotate));
+            this.robot.setPose('upperArm', gfx.Quaternion.multiply(rotation, bendRotation));
         });
 
         const upperZController = upperArmControls.add(this, 'upperArmBend', -45, 45);
         upperZController.name('bend');
         upperZController.onChange((value: number) => { 
-            // TO BE ADDED
+            const bendRotation = gfx.Quaternion.makeRotationZ(gfx.MathUtils.degreesToRadians(this.upperArmBend));
+            const rotation = gfx.Quaternion.makeRotationY(gfx.MathUtils.degreesToRadians(this.upperArmRotate));
+            this.robot.setPose('upperArm', gfx.Quaternion.multiply(rotation, bendRotation));
          });
 
         const middleArmControls = gui.addFolder('Middle Arm Controls');
