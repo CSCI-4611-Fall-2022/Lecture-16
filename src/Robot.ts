@@ -20,7 +20,7 @@ export class Robot extends gfx.Transform3
 
     setPose(name: string, pose: gfx.Quaternion): void
     {
-        // TO BE ADDED
+        this.root.setPose(name, pose);
     }
 
     reset(): void

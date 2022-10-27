@@ -98,8 +98,9 @@ export class RobotApp extends gfx.GfxApp
         const middleZController = middleArmControls.add(this, 'middleArmBend', -135, 135);
         middleZController.name('bend');
         middleZController.onChange((value: number) => { 
-            // TO BE ADDED
-         });
+            const rotation = gfx.Quaternion.makeRotationZ(gfx.MathUtils.degreesToRadians(this.middleArmBend));
+            this.robot.setPose('middleArm', rotation);
+        });
 
         const lowerArmControls = gui.addFolder('Lower Arm Controls');
         lowerArmControls.open();
@@ -107,7 +108,8 @@ export class RobotApp extends gfx.GfxApp
         const lowerZController = lowerArmControls.add(this, 'lowerArmBend', -135, 135);
         lowerZController.name('bend');
         lowerZController.onChange((value: number) => { 
-            // TO BE ADDED
+            const rotation = gfx.Quaternion.makeRotationZ(gfx.MathUtils.degreesToRadians(this.lowerArmBend));
+            this.robot.setPose('lowerArm', rotation);
          });
 
         const endEffectorControls = gui.addFolder('End Effector Controls');
@@ -116,7 +118,8 @@ export class RobotApp extends gfx.GfxApp
         const endEffectorXController = endEffectorControls.add(this, 'endEffectorBend', -90, 90);
         endEffectorXController.name('bend');
         endEffectorXController.onChange((value: number) => { 
-            // TO BE ADDED
+            const rotation = gfx.Quaternion.makeRotationX(gfx.MathUtils.degreesToRadians(this.endEffectorBend));
+            this.robot.setPose('endEffector', rotation);
          });
 
          const robotControls = gui.addFolder('Robot Controls');
