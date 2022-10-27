@@ -23,6 +23,25 @@ export class RobotPart extends gfx.Transform3
         else if(this.name == 'upperArm')
         {
             this.boneLength = 0.5;
+            this.rotation = gfx.Quaternion.makeRotationY(gfx.MathUtils.degreesToRadians(-45));
+
+            const child = new RobotPart('middleArm');
+            child.position.set(0, this.boneLength, 0);
+            this.add(child);
+        }
+        else if(this.name == 'middleArm')
+        {
+            this.boneLength = 0.4;
+            this.rotation = gfx.Quaternion.makeRotationZ(gfx.MathUtils.degreesToRadians(45));
+
+            const child = new RobotPart('lowerArm');
+            child.position.set(0, this.boneLength, 0);
+            this.add(child);
+        }
+        else if(this.name == 'lowerArm')
+        {
+            this.boneLength = 0.4;
+            this.rotation = gfx.Quaternion.makeRotationZ(gfx.MathUtils.degreesToRadians(45));
         }
         else
         {
@@ -46,6 +65,18 @@ export class RobotPart extends gfx.Transform3
             this.add(sphere);
         }
         else if(this.name == 'upperArm')
+        {
+            const arm = new gfx.BoxMesh(0.05, this.boneLength, 0.05);
+            arm.translateY(this.boneLength/2);
+            this.add(arm);
+        }
+        else if(this.name == 'middleArm')
+        {
+            const arm = new gfx.BoxMesh(0.05, this.boneLength, 0.05);
+            arm.translateY(this.boneLength/2);
+            this.add(arm);
+        }
+        else if(this.name == 'lowerArm')
         {
             const arm = new gfx.BoxMesh(0.05, this.boneLength, 0.05);
             arm.translateY(this.boneLength/2);
