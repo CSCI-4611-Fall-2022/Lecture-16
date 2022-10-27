@@ -3,9 +3,14 @@ import { RobotPart } from './RobotPart';
 
 export class Robot extends gfx.Transform3
 {
+    public root: RobotPart;
+
     constructor()
     {
         super();
+
+        this.root = new RobotPart('root');
+        this.add(this.root);
     }
 
     createMeshes(): void
