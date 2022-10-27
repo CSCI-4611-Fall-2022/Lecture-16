@@ -30,4 +30,35 @@ export class RobotPart extends gfx.Transform3
         }
     }
 
+    // Recursively create all the mesh geometry for the robot parts. 
+    // Each mesh will be defined in the robot part's local space.
+    createMeshes(): void
+    {
+        if(this.name == 'root')
+        {
+            const box = new gfx.BoxMesh(0.5, this.boneLength, 0.5);
+            box.translateY(this.boneLength/2);
+            this.add(box);
+
+            const sphere = new gfx.SphereMesh(0.1, 2);
+            sphere.scale.set(1, 0.5, 1);
+            sphere.translateY(this.boneLength);
+            this.add(sphere);
+        }
+        else if(this.name == 'upperArm')
+        {
+            const arm = new gfx.BoxMesh(0.05, this.boneLength, 0.05);
+            arm.translateY(this.boneLength/2);
+            this.add(arm);
+        }
+
+        // Recursively call this function for each child robot part
+        this.children.forEach((child: gfx.Transform3)=>{
+            if(child instanceof RobotPart)
+            {
+                child.createMeshes();
+            }
+        });
+    }
+
 }

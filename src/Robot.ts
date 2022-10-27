@@ -15,7 +15,7 @@ export class Robot extends gfx.Transform3
 
     createMeshes(): void
     {
-        // TO BE ADDED
+        this.root.createMeshes();
     }
 
     setPose(name: string, pose: gfx.Quaternion): void
