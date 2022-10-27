@@ -42,6 +42,15 @@ export class RobotPart extends gfx.Transform3
         {
             this.boneLength = 0.4;
             this.rotation = gfx.Quaternion.makeRotationZ(gfx.MathUtils.degreesToRadians(45));
+        
+            const child = new RobotPart('endEffector');
+            child.position.set(0, this.boneLength, 0);
+            this.add(child);
+        }
+        else if(this.name == 'endEffector')
+        {
+            this.boneLength = 0.1;
+            //this.rotation = gfx.Quaternion.makeRotationZ(gfx.MathUtils.degreesToRadians(45));
         }
         else
         {
@@ -69,18 +78,58 @@ export class RobotPart extends gfx.Transform3
             const arm = new gfx.BoxMesh(0.05, this.boneLength, 0.05);
             arm.translateY(this.boneLength/2);
             this.add(arm);
+
+            const sphere = new gfx.SphereMesh(0.05, 1);
+            sphere.translateY(this.boneLength);
+            this.add(sphere);
         }
         else if(this.name == 'middleArm')
         {
             const arm = new gfx.BoxMesh(0.05, this.boneLength, 0.05);
             arm.translateY(this.boneLength/2);
             this.add(arm);
+
+            const sphere = new gfx.SphereMesh(0.05, 1);
+            sphere.translateY(this.boneLength);
+            this.add(sphere);
         }
         else if(this.name == 'lowerArm')
         {
             const arm = new gfx.BoxMesh(0.05, this.boneLength, 0.05);
             arm.translateY(this.boneLength/2);
             this.add(arm);
+
+            const sphere = new gfx.SphereMesh(0.05, 1);
+            sphere.translateY(this.boneLength);
+            this.add(sphere);
+        }
+        else if(this.name == 'endEffector')
+        {
+            const pincher = new gfx.BoxMesh(0.025, this.boneLength, 0.025);
+
+            const leftPincher1 = new gfx.MeshInstance(pincher);
+            leftPincher1.rotateY(gfx.MathUtils.degreesToRadians(90));
+            leftPincher1.rotateZ(gfx.MathUtils.degreesToRadians(45));
+            leftPincher1.translateY(this.boneLength/2 + 0.03);
+            this.add(leftPincher1);
+
+            const leftPincher2 = new gfx.MeshInstance(pincher);
+            leftPincher2.translateY(this.boneLength/2 - 0.01);
+            leftPincher2.rotateZ(gfx.MathUtils.degreesToRadians(-75));
+            leftPincher2.translateY(this.boneLength/2 - 0.01);
+            leftPincher1.add(leftPincher2);
+
+            const rightPincher1 = new gfx.MeshInstance(pincher);
+            rightPincher1.rotateY(gfx.MathUtils.degreesToRadians(90));
+            rightPincher1.rotateZ(gfx.MathUtils.degreesToRadians(-45));
+            rightPincher1.translateY(this.boneLength/2 + 0.03);
+            this.add(rightPincher1);
+
+            const rightPincher2 = new gfx.MeshInstance(pincher);
+            rightPincher2.translateY(this.boneLength/2 - 0.01);
+            rightPincher2.rotateZ(gfx.MathUtils.degreesToRadians(75));
+            rightPincher2.translateY(this.boneLength/2 - 0.01);
+            rightPincher1.add(rightPincher2);
         }
 
         // Recursively call this function for each child robot part
