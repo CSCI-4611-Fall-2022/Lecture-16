@@ -4,6 +4,8 @@ export class RobotPart extends gfx.Transform3
 {
     public name: string;
     public boneLength: number;
+    public initialPose: gfx.Quaternion;
+    public resetPose: gfx.Quaternion;
 
     constructor(name: string)
     {
@@ -56,6 +58,9 @@ export class RobotPart extends gfx.Transform3
         {
             this.boneLength = 0;
         }
+
+        this.initialPose = this.rotation.clone();
+        this.resetPose = this.rotation.clone();
     }
 
     // Recursively create all the mesh geometry for the robot parts. 
@@ -159,4 +164,29 @@ export class RobotPart extends gfx.Transform3
         }
     }
 
+    reset(): void
+    {
+        this.resetPose.copy(this.rotation);
+
+        // Recursively call this function for each child robot part
+        this.children.forEach((child: gfx.Transform3)=>{
+            if(child instanceof RobotPart)
+            {
+                child.reset();
+            }
+        });
+    } 
+
+    interpolatePose(alpha: number): void
+    {
+        this.rotation.slerp(this.resetPose, this.initialPose, alpha);
+
+        // Recursively call this function for each child robot part
+        this.children.forEach((child: gfx.Transform3)=>{
+            if(child instanceof RobotPart)
+            {
+                child.interpolatePose(alpha);
+            }
+        });
+    }
 }
